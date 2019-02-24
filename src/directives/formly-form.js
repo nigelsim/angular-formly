@@ -20,6 +20,7 @@ function formlyForm(formlyUsability, formlyWarn, $parse, formlyConfig, $interpol
       model: '=',
       form: '=?',
       options: '=?',
+      ownNgForm: '=?',
     },
     controller: 'FormlyFormController',
     link: formlyFormLink,
@@ -33,8 +34,10 @@ function formlyForm(formlyUsability, formlyWarn, $parse, formlyConfig, $interpol
     if (attrs.hasOwnProperty('isFieldGroup') && el.parent().parent().hasClass('formly')) {
       parentFormAttributes = copyAttributes(el.parent().parent()[0].attributes)
     }
+    const ngFormDirective = rootEl !== 'ng-form' && attrs.ownNgForm ? 'ng-form' : ''
+
     return `
-        <${rootEl} class="formly"
+        <${rootEl} class="formly" ${ngFormDirective}
                  name="${getFormName()}"
                  role="form" ${parentFormAttributes}>
           <${fieldRootEl} formly-field
